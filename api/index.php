@@ -1,36 +1,30 @@
 <?php 
 
+    require_once('output.php');
+
     //preparaçao da resposta
     $data['status'] = 'ERROR';
-    $data['data'] = null;
+    $data['data'] = [];
 
-    //request
+    //API routes
     if(isset($_GET['option'])) {
 
         switch($_GET['option']) {
             case 'status':
-                define_response($data, 'API running OK!.... ');
+                api_status($data);
                 break;
 
             case 'random':
-                define_response($data, rand(0, 1000));
+                api_random($data);
+                break;
+
+            case 'hash':
+                api_hash($data);
                 break;
         }
 
     }
 
-    //resposta da API
+    //API response
     response($data);
-
-    //
-    function define_response(&$data, $value) { //uso do & para fazer referencia ao data de fora da variavel
-        $data['status'] = 'SUCCESS';
-        $data['data'] = $value;
-    }
-    
-    //Response
-    function response($data_response) {
-        header("Content-Type:application/json");
-        echo json_encode($data_response);
-    }
 ?>
